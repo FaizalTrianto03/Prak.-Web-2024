@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css"> <!-- Menggunakan CSS utama -->
+  <link rel="stylesheet" href="addition.css"> <!-- Link ke CSS spesifik untuk halaman ini -->
+  <title>Addition Operation</title>
+</head>
+<body>
+  <!-- Header (sama seperti halaman utama) -->
+  <header class="header">
+    <div class="logo">Trianto Studio</div>
+    <nav class="navbar">
+      <a href="Trianto_studio.html" class="nav-link">Home</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#about" class="nav-link">About Me</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Main Addition Section -->
+  <main class="addition-container">
+    <h1 class="addition-title">Addition Operation</h1>
+    <div class="input-group">
+      <input type="number" id="num1" placeholder="Enter first number">
+      <input type="number" id="num2" placeholder="Enter second number">
+    </div>
+    <button onclick="performAddition()" class="btn btn-primary">Add</button>
+    <button type="reset" class="btn btn-reset" onclick="resetForm()">Reset</button> <!-- Tombol reset -->
+    <p id="result"></p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2024 Trianto Studio by Faizal Qadri Trianto</p>
+  </footer>
+
+  <script>
+    // Fungsi untuk menambahkan dua angka
+    function performAddition() {
+      const num1 = parseFloat(document.getElementById('num1').value);
+      const num2 = parseFloat(document.getElementById('num2').value);
+      if (!isNaN(num1) && !isNaN(num2)) {
+        const result = num1 + num2;
+        document.getElementById('result').textContent = `Result: ${result}`;
+      } else {
+        document.getElementById('result').textContent = `Please enter valid numbers.`;
+      }
+    }
+
+    // Fungsi untuk reset form dan hasil
+    function resetForm() {
+      // Mengosongkan input field
+      document.getElementById('num1').value = '';
+      document.getElementById('num2').value = '';
+      
+      // Menghapus teks hasil
+      document.getElementById('result').textContent = '';
+    }
+  </script>
+</body>
+</html>
