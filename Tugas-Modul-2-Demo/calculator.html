@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="calculator.css" />
+    <title>Calculator - Trianto Studio</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <a class="logo" href="Trianto_studio.html" style="cursor: pointer; text-decoration: none;">Trianto Studio</a>
+        <nav class="navbar">
+          <a href="Trianto_studio.html" class="nav-link">Home</a>
+          <a href="portfolio.html" class="nav-link">Portfolio</a>
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#about" class="nav-link">About Me</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+      </header>
+
+      <div class="calculator-wrapper">
+        <!-- Calculator Section -->
+        <section class="calculator" id="calculator">
+          <div class="calculator-display">
+            <input
+              type="text"
+              id="display"
+              class="display"
+              disabled
+              onclick="setCursorToClickPosition(event)"
+            />
+          </div>
+
+          <!-- Navigation buttons for cursor -->
+          <div class="cursor-navigation">
+            <button class="nav-btn" onclick="moveCursorLeft()">&lt;</button>
+            <button class="nav-btn" onclick="moveCursorRight()">&gt;</button>
+          </div>
+
+          <!-- Buttons rendered dynamically -->
+          <div class="calculator-buttons" id="calculatorButtons">
+            <!-- Buttons will be rendered here -->
+          </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="history" id="history">
+          <div class="history-header">
+            <button class="clear-all-btn" onclick="clearAllHistory()">
+              Clear All History
+            </button>
+          </div>
+
+          <!-- History container with scroll functionality -->
+          <div id="historyContainer" class="history-container">
+            <!-- Riwayat akan dimuat di sini -->
+          </div>
+        </section>
+      </div>
+
+      <footer class="footer">
+        <p>© 2024 Trianto Studio by Faizal Qadri Trianto</p>
+      </footer>
+    </div>
+
+    <script>
+      let displayValue = "";
+      let history = [];
+      let cursorPosition = 0; // Menyimpan posisi kursor
+
+      // Array mapping tombol basic dengan label, colSpan, rowSpan, dan warna
+      const basicButtons = [
+        [
+          { label: "AC", colSpan: 1, rowSpan: 1, color: "#59a9f0" },
+          { label: "%", colSpan: 1, rowSpan: 1, color: "" },
+          { label: "^", colSpan: 1, rowSpan: 1, color: "" },
+          { label: "Del", colSpan: 1, rowSpan: 1, color: "#fa4137" },
+        ],
+        [
+          { label: "7", colSpan: 1, rowSpan: 1, color: "" },
+          { label: "8", colSpan: 1, rowSpan: 1, color: "" },
+          { label: "9", colSpan: 1, rowSpan: 1, color: "" },
+          { label: "/", colSpan: 1, rowSpan: 1, color: "" },
+        ],
+        [
+          { label: "4", colSpan: 1, rowSpan: 1, color: "" },
+          { label: "5", colSpan: 1, rowSpan: 1, color: "" },
+          { label: "6", colSpan: 1, rowSpan: 1, color: "" },
+          { label: "*", colSpan: 1, rowSpan: 1, color: "" },
+        ],
+        [
+          { label: "1", colSpan: 1, rowSpan: 1, color: "" },
+          { label: "2", colSpan: 1, rowSpan: 1, color: "" },
+          { label: "3", colSpan: 1, rowSpan: 1, color: "" },
+          { label: "+", colSpan: 1, rowSpan: 2, color: "" },
+        ],
+        [
+          { label: "0", colSpan: 2, rowSpan: 1, color: "" },
+          { label: ".", colSpan: 1, rowSpan: 1, color: "" },
+        ],
+        [{ label: "=", colSpan: 4, rowSpan: 1, color: "#c7a614" }],
+      ];
+
+      // Fungsi untuk merender tombol berdasarkan array buttons
+      function renderButtons(buttonSet) {
+        const buttonContainer = document.getElementById("calculatorButtons");
+        buttonContainer.innerHTML = ""; // Kosongkan kontainer sebelum merender ulang
+
+        buttonSet.forEach((row) => {
+          row.forEach((button) => {
+            const btn = document.createElement("button");
+            btn.textContent = button.label;
+            btn.classList.add("btn");
+
+            // Custom warna jika disediakan
+            if (button.color) {
+              btn.style.backgroundColor = button.color;
+            }
+
+            // Atur colSpan dan rowSpan (untuk fleksibilitas layout)
+            btn.style.gridColumn = `span ${button.colSpan}`;
+            btn.style.gridRow = `span ${button.rowSpan}`;
+
+            // Tentukan fungsi berdasarkan label
+            if (!isNaN(button.label) || button.label === ".") {
+              btn.onclick = () => appendNumber(button.label);
+            } else if (["+", "-", "*", "/", "%", "^"].includes(button.label)) {
+              btn.onclick = () => appendOperator(button.label);
+            } else if (button.label === "AC") {
+              btn.onclick = clearDisplay;
+            } else if (button.label === "Del") {
+              btn.onclick = deleteLast;
+            } else if (button.label === "=") {
+              btn.onclick = calculate;
+            }
+
+            buttonContainer.appendChild(btn);
+          });
+        });
+      }
+
+      // Fungsi untuk menampilkan angka pada layar dengan indikator kursor
+      function updateDisplay() {
+        const display = document.getElementById("display");
+        const beforeCursor = displayValue.slice(0, cursorPosition);
+        const afterCursor = displayValue.slice(cursorPosition);
+
+        // Tampilkan angka dan letakkan indikator '|' di posisi kursor
+        display.value = beforeCursor + "|" + afterCursor;
+
+        // Scroll otomatis ke kanan untuk melihat angka baru
+        display.scrollLeft = display.scrollWidth;
+      }
+
+      // Fungsi untuk menambahkan angka di posisi kursor
+      function appendNumber(number) {
+        displayValue =
+          displayValue.slice(0, cursorPosition) +
+          number +
+          displayValue.slice(cursorPosition);
+        cursorPosition += 1;
+        updateDisplay();
+      }
+
+      // Fungsi untuk menambahkan operator di posisi kursor
+      function appendOperator(operator) {
+        if (operator === "^") {
+          operator = "**"; // Ubah ^ menjadi ** untuk operasi eksponen
+        }
+        displayValue =
+          displayValue.slice(0, cursorPosition) +
+          operator +
+          displayValue.slice(cursorPosition);
+        cursorPosition += operator.length;
+        updateDisplay();
+      }
+
+      // Fungsi untuk mengatur posisi kursor
+      function setCursorPosition(position) {
+        cursorPosition = position;
+        updateDisplay();
+      }
+
+      // Fungsi untuk memindahkan kursor ke kiri
+      function moveCursorLeft() {
+        if (cursorPosition > 0) {
+          cursorPosition -= 1;
+          updateDisplay();
+        }
+      }
+
+      // Fungsi untuk memindahkan kursor ke kanan
+      function moveCursorRight() {
+        if (cursorPosition < displayValue.length) {
+          cursorPosition += 1;
+          updateDisplay();
+        }
+      }
+
+      // Fungsi untuk menangkap posisi klik pengguna dan memindahkan kursor
+      function setCursorToClickPosition(event) {
+        const display = document.getElementById("display");
+        const clickPosition = display.selectionStart - 1; // -1 untuk menyesuaikan dengan indikator '|'
+        setCursorPosition(Math.max(0, clickPosition));
+      }
+
+      // Fungsi untuk menghapus semua
+      function clearDisplay() {
+        displayValue = "";
+        cursorPosition = 0;
+        updateDisplay();
+      }
+
+      // Fungsi untuk menghapus karakter terakhir
+      function deleteLast() {
+        if (cursorPosition > 0) {
+          displayValue =
+            displayValue.slice(0, cursorPosition - 1) +
+            displayValue.slice(cursorPosition);
+          cursorPosition -= 1;
+          updateDisplay();
+        }
+      }
+
+      // Fungsi untuk melakukan perhitungan dan menyimpan ke riwayat
+      function calculate() {
+        try {
+          const result = eval(displayValue).toString();
+          const calculation = displayValue + " = " + result;
+          displayValue = result;
+          cursorPosition = result.length;
+          saveHistory(calculation); // Simpan operasi dan hasilnya
+          updateDisplay();
+        } catch {
+          displayValue = "Error";
+          cursorPosition = displayValue.length;
+          updateDisplay();
+        }
+      }
+
+      // Fungsi untuk menyimpan riwayat perhitungan
+      function saveHistory(calculation) {
+        history.push(calculation);
+        localStorage.setItem("calculationHistory", JSON.stringify(history));
+        loadHistory();
+      }
+
+      // Fungsi untuk memuat riwayat dari localStorage
+      function loadHistory() {
+        const storedHistory = localStorage.getItem("calculationHistory");
+        if (storedHistory) {
+          history = JSON.parse(storedHistory);
+          displayHistory();
+        }
+      }
+
+      // Fungsi untuk menampilkan riwayat sebagai card
+      function displayHistory() {
+        const historyContainer = document.getElementById("historyContainer");
+        historyContainer.innerHTML = ""; // Kosongkan kontainer riwayat
+
+        history.forEach((calculation, index) => {
+          const historyRow = document.createElement("div");
+          historyRow.classList.add("history-row");
+
+          const historyCard = document.createElement("div");
+          historyCard.classList.add("history-card");
+          historyCard.textContent = calculation;
+          historyCard.onclick = () => loadCalculation(calculation); // Fungsi klik untuk memuat ke kalkulator
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.classList.add("delete-btn");
+          deleteBtn.textContent = "Delete";
+          deleteBtn.onclick = () => deleteHistory(index);
+
+          historyRow.appendChild(historyCard);
+          historyRow.appendChild(deleteBtn);
+          historyContainer.appendChild(historyRow);
+        });
+      }
+
+      // Fungsi untuk memuat ulang perhitungan dari riwayat
+      function loadCalculation(calculation) {
+        const expression = calculation.split("=")[0].trim();
+        displayValue = expression;
+        cursorPosition = expression.length;
+        updateDisplay();
+      }
+
+      // Fungsi untuk menghapus satu riwayat
+      function deleteHistory(index) {
+        history.splice(index, 1);
+        localStorage.setItem("calculationHistory", JSON.stringify(history));
+        loadHistory();
+      }
+
+      // Fungsi untuk menghapus semua riwayat
+      function clearAllHistory() {
+        history = []; // Kosongkan array history
+        localStorage.removeItem("calculationHistory"); // Hapus dari localStorage
+        document.getElementById("historyContainer").innerHTML = ""; // Kosongkan tampilan riwayat
+      }
+
+      // Panggil fungsi render dan load riwayat saat halaman dimuat
+      document.addEventListener("DOMContentLoaded", () => {
+        renderButtons(basicButtons);
+        loadHistory();
+        updateDisplay(); // Tampilkan tampilan awal
+      });
+    </script>
+  </body>
+</html>
