@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Inter', sans-serif;
+  background-color: #161616;
+  color: #ffffff;
+  height: 100%;
+  scroll-behavior: smooth;
+  line-height: 1.6;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  padding: 20px 50px;
+  background-color: rgba(22, 22, 22, 0.8);
+  backdrop-filter: blur(10px);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.navbar {
+  display: flex;
+  gap: 35px;
+}
+
+.nav-link {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 18px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #00d4ff;
+}
+
+/* Calculator Wrapper */
+.calculator-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+  margin-top: 120px;
+}
+
+/* Calculator Layout */
+.calculator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  max-width: fit-content;
+}
+
+.calculator-display {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.display {
+  width: 100%;
+  padding: 15px;
+  font-size: 28px;
+  text-align: right;
+  border-radius: 10px;
+  border: none;
+  background-color: #2b2b2b;
+  color: #ffffff;
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5), inset -5px -5px 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Button Styles */
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Membuat 4 kolom */
+  grid-gap: 15px;
+  width: 100%;
+}
+
+.btn {
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #333;
+  color: #ffffff;
+  border: none;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5), -5px -5px 15px rgba(255, 255, 255, 0.1);
+}
+
+.btn:hover {
+  background-color: #00d4ff;
+  color: #161616;
+}
+
+/* History Section */
+.history {
+  display: flex;
+  align-items: ce;
+  flex-direction: column;
+  width: 500px;
+  height: 1000px;
+  overflow-y: scroll; /* Aktifkan scroll vertikal */
+  scrollbar-width: none; /* Hilangkan scrollbar di Firefox */
+}
+
+.history::-webkit-scrollbar {
+  width: 100;
+}
+
+
+
+/* History Header (Clear Button) */
+.history-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.clear-all-btn {
+  background-color: #fa4137;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.clear-all-btn:hover {
+  background-color: #ff6659;
+}
+
+/* History Container */
+.history-container {
+  min-height: 585px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 560px; /* Batas maksimal tinggi history container */
+  overflow-y: scroll; /* Aktifkan scroll vertikal */
+  padding: 10px;
+  border: 1px solid #444; /* Border untuk membatasi container */
+  border-radius: 10px;
+  background-color: #1e1e1e;
+  scrollbar-width: none; /* Hilangkan scrollbar di Firefox */
+}
+
+.history-container::-webkit-scrollbar {
+  display: none; /* Hilangkan scrollbar di Chrome, Safari, dan Edge */
+}
+
+
+/* History Row */
+.history-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* History Card */
+.history-card {
+  padding: 15px;
+  background-color: #2b2b2b;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5), -5px -5px 10px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex: 1;
+  margin-right: 10px;
+  width: 250px;  /* Tetapkan ukuran card */
+}
+
+.history-card:hover {
+  background-color: #00d4ff;
+  color: #161616;
+}
+
+/* Delete Button */
+.delete-btn {
+  background-color: #fa4137;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #ff6659;
+}
+
+/* Navigation buttons styling */
+.cursor-navigation {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+  color: blue;
+}
+
+.nav-btn {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  font-size: 18px;
+  border-radius: 5px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.nav-btn:hover {
+  background-color: #00d4ff;
+  color: #161616;
+}
+
+/* Footer */
+.footer {
+  background-color: #161616;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  margin-top: auto;
+}

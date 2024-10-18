@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css"> <!-- Menggunakan CSS utama -->
+  <link rel="stylesheet" href="form_validation.css"> <!-- Link ke CSS spesifik halaman ini -->
+  <title>Form Validation</title>
+</head>
+<body>
+  <!-- Header (sama seperti halaman utama) -->
+  <header class="header">
+    <div class="logo" href="Trianto_studio.html">Trianto Studio</div>
+    <nav class="navbar">
+      <a href="Trianto_studio.html" class="nav-link">Home</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#about" class="nav-link">About Me</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Main Form Container -->
+  <div class="form-container">
+    <h1>Simple Form Validation</h1>
+    <form onsubmit="return validateForm()">
+      <input type="text" id="username" placeholder="Enter your username">
+      <p id="username-error" class="error-message"></p> <!-- Error message for username -->
+
+      <input type="email" id="email" placeholder="Enter your email">
+      <p id="email-error" class="error-message"></p> <!-- Error message for email -->
+
+      <input type="text" id="address" placeholder="Enter your address">
+      <p id="address-error" class="error-message"></p> <!-- Error message for address -->
+
+      <input type="tel" id="phone" placeholder="Enter your phone number">
+      <p id="phone-error" class="error-message"></p> <!-- Error message for phone -->
+
+      <textarea id="message" placeholder="Enter your message" rows="4"></textarea>
+      <p id="message-error" class="error-message"></p> <!-- Error message for message -->
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2024 Trianto Studio by Faizal Qadri Trianto</p>
+  </footer>
+
+  <script>
+    function validateForm() {
+      // Mendapatkan nilai input
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      // Menghapus pesan error sebelumnya
+      clearErrorMessages();
+
+      let hasError = false;
+      let errorMessages = [];
+
+      // Validasi Username
+      if (username === "") {
+        document.getElementById('username-error').textContent = "Username is required.";
+        document.getElementById('username-error').style.display = "block";
+        errorMessages.push("Username is required.");
+        hasError = true;
+      }
+
+      // Validasi Email
+      if (email === "") {
+        document.getElementById('email-error').textContent = "Email is required.";
+        document.getElementById('email-error').style.display = "block";
+        errorMessages.push("Email is required.");
+        hasError = true;
+      }
+
+      // Validasi Address
+      if (address === "") {
+        document.getElementById('address-error').textContent = "Address is required.";
+        document.getElementById('address-error').style.display = "block";
+        errorMessages.push("Address is required.");
+        hasError = true;
+      }
+
+      // Validasi Phone
+      if (phone === "") {
+        document.getElementById('phone-error').textContent = "Phone number is required.";
+        document.getElementById('phone-error').style.display = "block";
+        errorMessages.push("Phone number is required.");
+        hasError = true;
+      }
+
+      // Validasi Message
+      if (message === "") {
+        document.getElementById('message-error').textContent = "Message is required.";
+        document.getElementById('message-error').style.display = "block";
+        errorMessages.push("Message is required.");
+        hasError = true;
+      }
+
+      // Jika ada error, tampilkan alert dan batalkan pengiriman form
+      if (hasError) {
+        alert("Error:\n" + errorMessages.join("\n"));
+        return false;
+      }
+
+      alert('Form submitted successfully!');
+      return true;
+    }
+
+    function clearErrorMessages() {
+      const errorFields = document.querySelectorAll('.error-message');
+      errorFields.forEach(function (field) {
+        field.style.display = 'none';
+        field.textContent = '';
+      });
+    }
+  </script>
+</body>
+</html>

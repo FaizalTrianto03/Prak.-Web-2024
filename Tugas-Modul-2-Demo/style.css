@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ 
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* General Styles */
+html, body {
+  font-family: 'Inter', sans-serif;
+  color: #161616;
+  background-color: #ffffff;
+  scroll-behavior: smooth;
+  line-height: 1.6;
+}
+
+.element::-webkit-scrollbar {
+  display: none; /* Menyembunyikan scroll bar */
+}
+
+/* Utility for centering text */
+.text-center {
+  text-align: center;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: rgba(22, 22, 22, 0.8);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+.logo {
+  font-weight: 600;
+  font-size: 24px;
+  color: #ffffff;
+}
+.navbar {
+  display: flex;
+  gap: 35px;
+}
+.nav-link {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 18px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.nav-link:hover {
+  color: #00d4ff;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 150px 50px;
+  background-color: #161616;
+  height: 100vh;
+  position: relative;
+}
+.hero-content {
+  max-width: 50%;
+}
+.hero-title {
+  font-size: 48px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+.hero-description {
+  font-size: 18px;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+}
+.btn {
+  padding: 12px 25px;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+}
+.btn-primary {
+  background-color: #00d4ff;
+  color: #161616;
+  border: none;
+}
+.btn-primary:hover {
+  background-color: #00b2e1;
+  transform: translateY(-3px);
+}
+.btn-secondary {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+.btn-secondary:hover {
+  background-color: #ffffff;
+  color: #161616;
+  transform: translateY(-3px);
+}
+.hero-image {
+  max-width: 40%;
+  height: auto;
+}
+
+/* Services Section */
+.services {
+  padding: 80px 50px;
+  text-align: center;
+}
+.section-title {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+.service-cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap; /* Flex-wrap ensures it works on smaller screens */
+}
+.card {
+  background-color: #161616;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+}
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+.card-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+.card-description {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* About Section */
+.about-us {
+  background-color: #f5f5f5;
+  padding: 80px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center horizontally */
+  text-align: center; /* Ensure text is centered */
+  flex-wrap: wrap; /* Ensure responsiveness */
+  gap: 20px; /* Add some space between image and content */
+}
+.about-image {
+  max-width: 100%;
+  width: 250px; /* Set fixed width for better control, can adjust as needed */
+  height: auto;
+  margin-bottom: 20px;
+}
+.about-content {
+  max-width: 600px; /* Set a max width to prevent it from getting too wide */
+  padding-left: 0; /* Remove left padding since everything is centered */
+}
+.about-content p {
+  font-size: 18px;
+  color: #161616;
+}
+
+/* Testimonial Section */
+.testimonials {
+  padding: 80px 50px;
+  background-color: #161616;
+  color: #ffffff;
+  text-align: center;
+}
+.testimonial-cards {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap; /* Flex-wrap ensures it works on smaller screens */
+}
+.testimonial-card {
+  max-width: 45%;
+  background-color: #1e1e1e;
+  padding: 30px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  margin-bottom: 20px;
+}
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
+.testimonial-card p {
+  font-size: 18px;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+.testimonial-card span {
+  font-weight: 600;
+}
+
+/* Contact Section */
+.contact {
+  padding: 80px 50px;
+  text-align: center;
+  background-color: #161616; /* Mengubah background menjadi hitam */
+  color: #ffffff; /* Mengubah warna teks menjadi putih untuk kontras */
+  position: relative;
+}
+
+.contact .section-title {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #00d4ff; /* Warna aksen pada judul untuk membuatnya menonjol */
+}
+
+.contact p {
+  font-size: 18px;
+  max-width: 600px;
+  margin: 0 auto 30px; /* Memberikan jarak bawah */
+  color: #d1d1d1; /* Warna teks sedikit lebih terang agar kontras dengan hitam */
+}
+
+.contact .btn {
+  margin-top: 20px;
+  background-color: #00d4ff;
+  color: #161616;
+  padding: 12px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+}
+
+.contact .btn:hover {
+  background-color: #00b2e1;
+  transform: translateY(-3px);
+}
+
+/* Footer */
+.footer {
+  background-color: #161616;
+  padding: 30px;
+  text-align: center;
+  color: #ffffff;
+}
