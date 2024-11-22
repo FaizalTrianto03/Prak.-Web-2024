@@ -1,0 +1,38 @@
+{
+    "info": {
+      "name": "Trianto Studio API Collection",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Get All Portfolios",
+        "request": {
+          "method": "GET",
+          "url": {
+            "raw": "http://localhost/backend/public/api/portfolio",
+            "protocol": "http",
+            "host": ["localhost"],
+            "path": ["backend", "public", "api", "portfolio"]
+          }
+        }
+      },
+      {
+        "name": "Add Portfolio",
+        "request": {
+          "method": "POST",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "url": {
+            "raw": "http://localhost/backend/public/api/portfolio",
+            "protocol": "http",
+            "host": ["localhost"],
+            "path": ["backend", "public", "api", "portfolio"]
+          },
+          "body": {
+            "mode": "raw",
+            "raw": "{\"title\":\"Sample Portfolio\",\"description\":\"This is a test.\",\"image_url\":\"uploads/sample.jpg\",\"category\":\"Web Design\",\"date\":\"2024-11-16\"}"
+          }
+        }
+      }
+    ]
+  }
+  
